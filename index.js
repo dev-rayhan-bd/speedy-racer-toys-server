@@ -75,32 +75,16 @@ async function run() {
     });
 
     // // api for sorting
-    // app.get("/sortby/:text", async (req, res) => {
-    //   console.log(req.params.text);
-    //   if (req.params.text == "acending") {
-    //     const result = await toysCollection.find().sort({ price: 1 }).toArray();
-    //     // console.log(result);
-    //     res.send(result);
-    //   } else {
-    //     const result = await toysCollection
-    //       .find()
-    //       .sort({ price: -1 })
-    //       .toArray();
-    //     // console.log(result);
-    //     res.send(result);
-    //   }
-    // });
-
-
-    // myToys Api
-    
-   
-    app.get("/myToys/:email", async (req, res) => {
-      // console.log(req.params.email);
-      const query = { sellerEmail: req.params.email };
-      const result = await toysCollection.find(query).sort({price:1}).toArray();
+  
+    app.get("/myToys", async (req, res) => {
+      // console.log(req.query);
+      const query = { sellerEmail: req.query.email };
+      const result = await toysCollection.find(query).sort({price: Number(req.query.sortby)}).toArray();
       res.send(result);
+      // console.log(result);
     });
+
+
     // api for search
     app.get("/toys/searchbyToy/:text", async (req, res) => {
       const text = req.params.text;
